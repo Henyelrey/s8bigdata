@@ -1,0 +1,35 @@
+name: lambda26-uso-red
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2.0.18
+    container_name: lambda26-mosquitto-red
+    ports:
+      - "41883:1883"
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+    networks:
+      - lambda26-kafka-net
+
+  uso-red:
+    build: .
+    container_name: lambda26-uso-red
+    volumes:
+      - ./app:/app
+    working_dir: /app
+    command: sleep infinity
+    environment:
+      - MQTT_HOST=mosquitto
+      - MQTT_PORT=1883
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - KAFKA_TOPIC_RED=red-telemetria
+      - KAFKA_GROUP_ID=uso-red-group
+    networks:
+      - lambda26-kafka-net
+    depends_on:
+      - mosquitto
+
+networks:
+  lambda26-kafka-net:
+    external: true
+    name: lambda26-kafka-net

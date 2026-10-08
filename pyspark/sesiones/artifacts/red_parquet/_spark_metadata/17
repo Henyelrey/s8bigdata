@@ -1,0 +1,3 @@
+v1
+{"path":"file:///opt/artifacts/red_parquet/part-00000-07f117d9-be93-4240-9988-27b0e5217b85-c000.snappy.parquet","size":4645,"isDir":false,"modificationTime":1791484340210,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///opt/artifacts/red_parquet/part-00001-0e983404-40ac-43f9-a29f-f9784a8951dc-c000.snappy.parquet","size":5147,"isDir":false,"modificationTime":1791484340212,"blockReplication":1,"blockSize":33554432,"action":"add"}
