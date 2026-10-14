@@ -1,0 +1,88 @@
+apiVersion: 1
+
+groups:
+  - orgId: 1
+    name: s9-pipeline
+    folder: S9 Alertas
+    interval: 1m
+    rules:
+      - uid: s9-exporter-caido
+        title: Exporter caido
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange: { from: 300, to: 0 }
+            datasourceUid: prometheus
+            model: { refId: A, expr: 'up{job="kafka-exporter"}', instant: true }
+          - refId: B
+            datasourceUid: __expr__
+            model: { refId: B, type: reduce, expression: A, reducer: last }
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: B
+              conditions:
+                - evaluator: { type: lt, params: [1] }
+        for: 1m
+        noDataState: NoData
+        execErrState: Error
+        annotations:
+          summary: kafka-exporter no responde al scrape de Prometheus
+        labels:
+          severidad: critica
+
+      - uid: s9-kafka-no-visible
+        title: Kafka no visible
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange: { from: 300, to: 0 }
+            datasourceUid: prometheus
+            model: { refId: A, expr: 'kafka_brokers', instant: true }
+          - refId: B
+            datasourceUid: __expr__
+            model: { refId: B, type: reduce, expression: A, reducer: last }
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: B
+              conditions:
+                - evaluator: { type: lt, params: [1] }
+        for: 1m
+        noDataState: NoData
+        execErrState: Error
+        annotations:
+          summary: kafka-exporter no detecta ningun broker
+        labels:
+          severidad: critica
+
+      - uid: s9-lag-alto
+        title: Lag alto sostenido (uso-red-group)
+        condition: C
+        data:
+          - refId: A
+            relativeTimeRange: { from: 300, to: 0 }
+            datasourceUid: prometheus
+            model: { refId: A, expr: 'sum(kafka_consumergroup_lag{consumergroup="uso-red-group",topic="red-telemetria"})', instant: true }
+          - refId: B
+            datasourceUid: __expr__
+            model: { refId: B, type: reduce, expression: A, reducer: last }
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: B
+              conditions:
+                - evaluator: { type: gt, params: [60] }
+        for: 2m
+        noDataState: NoData
+        execErrState: Error
+        annotations:
+          summary: uso-red-group tiene mas de 60 lecturas pendientes (20 s de datos) durante 2 min
+        labels:
+          severidad: advertencia

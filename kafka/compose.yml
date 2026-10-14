@@ -33,6 +33,18 @@ services:
     networks:
       - lambda26-kafka-net
 
+  kafka-exporter:
+    image: danielqsj/kafka-exporter:v1.10.0
+    container_name: lambda26-kafka-exporter
+    restart: unless-stopped
+    command: ["--kafka.server=kafka:9092"]
+    # Sin "ports": 49308 cae en un rango TCP reservado por Hyper-V en Windows
+    # (bind forbidden). Prometheus lo alcanza por la red lambda26-kafka-net.
+    depends_on:
+      - kafka
+    networks:
+      - lambda26-kafka-net
+
 networks:
   lambda26-kafka-net:
     name: lambda26-kafka-net

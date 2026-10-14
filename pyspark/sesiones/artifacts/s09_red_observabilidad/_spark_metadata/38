@@ -1,0 +1,3 @@
+v1
+{"path":"file:///opt/artifacts/s09_red_observabilidad/part-00000-a2612942-675d-4bfe-a71b-515c7cdcb833-c000.snappy.parquet","size":6593,"isDir":false,"modificationTime":1792019802200,"blockReplication":1,"blockSize":33554432,"action":"add"}
+{"path":"file:///opt/artifacts/s09_red_observabilidad/part-00001-afe98bd5-1fa2-4635-9223-defff80f22aa-c000.snappy.parquet","size":7000,"isDir":false,"modificationTime":1792019802193,"blockReplication":1,"blockSize":33554432,"action":"add"}
