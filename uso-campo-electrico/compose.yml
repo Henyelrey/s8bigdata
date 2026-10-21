@@ -1,0 +1,17 @@
+name: lambda26-uso-campo-electrico
+
+services:
+  uso-campo-electrico:
+    build: .
+    container_name: lambda26-uso-campo-electrico
+    volumes:
+      - ./app:/app
+    working_dir: /app
+    command: sleep infinity
+    networks:
+      - lambda26-kafka-net
+
+networks:
+  lambda26-kafka-net:
+    external: true
+    name: lambda26-kafka-net
