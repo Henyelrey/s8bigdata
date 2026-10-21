@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.feature.VectorAssembler","timestamp":1792594645941,"sparkVersion":"4.2.0","uid":"VectorAssembler_d9b49c85a3ee","paramMap":{"inputCols":["CE","CM","TempOut","OutHum","WindSpeed","Bar","SolarRad","UVIndex"],"outputCol":"features"},"defaultParamMap":{"handleInvalid":"error","outputCol":"VectorAssembler_d9b49c85a3ee__output"}}
