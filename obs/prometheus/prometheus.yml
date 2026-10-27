@@ -13,3 +13,10 @@ scrape_configs:
     static_configs:
       - targets:
           - kafka-exporter:9308
+
+  - job_name: pushgateway
+    honor_labels: true
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+          - pushgateway:9091
